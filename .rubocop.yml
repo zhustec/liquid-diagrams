@@ -46,3 +46,6 @@ Style/HashTransformValues:
 
 RSpec/MultipleExpectations:
   Max: 2
+
+RSpec/SubjectStub:
+  Enabled: false
