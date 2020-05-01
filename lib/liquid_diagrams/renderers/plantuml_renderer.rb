@@ -6,7 +6,7 @@ module LiquidDiagrams
       XML_REGEX = /^<\?xml([^>]|\n)*>\n?/.freeze
 
       def render
-        render_with_stdin_stdout(build_command, @content).sub(XML_REGEX, '')
+        Rendering.render_with_stdin_stdout(build_command, @content).sub(XML_REGEX, '')
       end
 
       def build_command

@@ -14,7 +14,7 @@ module LiquidDiagrams
       ].freeze
 
       def render
-        render_with_tempfile(build_command, @content) do |input, output|
+        Rendering.render_with_tempfile(build_command, @content) do |input, output|
           "--input #{input} --output #{output}"
         end
       end

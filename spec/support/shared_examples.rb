@@ -5,7 +5,9 @@ RSpec.shared_examples 'render with stdin and stdout' do |kclass|
 
   before do
     allow(renderer).to receive(:build_command).and_return 'cmd'
-    allow(renderer).to receive(:render_with_stdin_stdout).and_return 'ok'
+    allow(LiquidDiagrams::Rendering).to receive(
+      :render_with_stdin_stdout
+    ).and_return 'ok'
   end
 
   it 'call build_command' do
@@ -17,9 +19,9 @@ RSpec.shared_examples 'render with stdin and stdout' do |kclass|
   it 'render with tempfile' do
     expect(renderer.render).to eq 'ok'
 
-    expect(renderer).to have_received(:render_with_stdin_stdout).with(
-      'cmd', renderer.instance_variable_get(:@content)
-    )
+    expect(LiquidDiagrams::Rendering).to have_received(
+      :render_with_stdin_stdout
+    ).with('cmd', renderer.instance_variable_get(:@content))
   end
 end
 
@@ -28,7 +30,9 @@ RSpec.shared_examples 'render with tempfile' do |kclass|
 
   before do
     allow(renderer).to receive(:build_command)
-    allow(renderer).to receive(:render_with_tempfile).and_yield('in', 'out')
+    allow(LiquidDiagrams::Rendering).to receive(
+      :render_with_tempfile
+    ).and_yield('in', 'out')
 
     renderer.render
   end
@@ -38,6 +42,6 @@ RSpec.shared_examples 'render with tempfile' do |kclass|
   end
 
   it 'render with tempfile' do
-    expect(renderer).to have_received(:render_with_tempfile)
+    expect(LiquidDiagrams::Rendering).to have_received(:render_with_tempfile)
   end
 end

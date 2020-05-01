@@ -4,20 +4,23 @@ module LiquidDiagrams
   module Utils
     module_function
 
-    # Join
+    # Join the args with prefix
     #
-    # Examples
+    # @param args
+    # @param with [String]
     #
-    #   join('path', with: ' -I')
-    #   # => ' -Ipath'
+    # @return [String]
     #
-    #   join(['path1', 'path2'], with: ' -I')
-    #   # => ' -Ipath1 -Ipath2'
+    # @example join on string
+    #   join('path', with: ' -I')                     # => ' -Ipath'
     #
+    # @example join on array
+    #   join(['path1', 'path2'], with: ' -I')         # => ' -Ipath1 -Ipath2'
+    #
+    # @example join on hash
     #   join({ color: 'red', size: '10' }, with: ' --') do |k, v|
     #     "#{k} #{v}"
-    #   end
-    #   # => ' --color red --size 10'
+    #   end                                           # => ' --color red --size 10'
     def join(args, with:)
       args = Array(args)
       args = args.map { |arg| yield arg } if block_given?
@@ -25,12 +28,10 @@ module LiquidDiagrams
       "#{with}#{args.join(with)}"
     end
 
-    # Merge
+    # Merge from the hash with only those keys exists
     #
-    # Examples
-    #
-    #   merge({ k1: 1, k2: 2}, { k1: 11, k3: 13})
-    #   # => { k1: 11, k2: 2 }
+    # @example
+    #   merge({ k1: 1, k2: 2}, { k1: 11, k3: 13})     # => { k1: 11, k2: 2 }
     def merge(first, second)
       first.merge(second.slice(*first.keys))
     end

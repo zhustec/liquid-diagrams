@@ -13,7 +13,7 @@ module LiquidDiagrams
       XML_REGEX = /^<\?xml(([^>]|\n)*>\n?){2}/.freeze
 
       def render
-        output = render_with_stdin_stdout(build_command, @content)
+        output = Rendering.render_with_stdin_stdout(build_command, @content)
         output.dup.force_encoding('utf-8').sub(XML_REGEX, '')
       end
 

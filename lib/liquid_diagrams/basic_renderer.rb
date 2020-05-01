@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module LiquidDiagrams
+  # @abstract Subclass and override {#render} to implement
   class BasicRenderer
-    include Rendering
-
     def self.render(content, options = {})
       new(content, options).render
     end

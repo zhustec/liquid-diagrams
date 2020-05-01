@@ -43,7 +43,7 @@ RSpec.describe LiquidDiagrams::BasicBlock do
     it 'render with renderer' do
       allow(TestRenderer).to receive(:render).and_return 'success'
 
-      expect(block.render!(Liquid::Context.new, '')).to eq 'success'
+      expect(block.render!(Liquid::Context.new)).to eq 'success'
     end
   end
 end

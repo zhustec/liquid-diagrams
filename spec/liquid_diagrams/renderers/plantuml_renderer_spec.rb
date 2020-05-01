@@ -8,9 +8,9 @@ RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer do
   describe '#render' do
     before do
       allow(renderer).to receive(:build_command)
-      allow(renderer).to receive(:render_with_stdin_stdout).and_return(
-        +'<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg></svg>'
-      )
+      allow(LiquidDiagrams::Rendering).to receive(
+        :render_with_stdin_stdout
+      ).and_return('<?xml version="1.0" encoding="UTF-8" standalone="no"?><>')
     end
 
     it 'call build_command' do
@@ -22,11 +22,11 @@ RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer do
     it 'render with stdin and stdout' do
       renderer.render
 
-      expect(renderer).to have_received(:render_with_stdin_stdout)
+      expect(LiquidDiagrams::Rendering).to have_received(:render_with_stdin_stdout)
     end
 
     it 'remove xml heading' do
-      expect(renderer.render).to eq '<svg></svg>'
+      expect(renderer.render).to eq '<>'
     end
   end
 

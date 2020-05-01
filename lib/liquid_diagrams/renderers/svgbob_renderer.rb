@@ -11,7 +11,7 @@ module LiquidDiagrams
       ].freeze
 
       def render
-        render_with_stdin_stdout(build_command, @content)
+        Rendering.render_with_stdin_stdout(build_command, @content)
       end
 
       def build_command
