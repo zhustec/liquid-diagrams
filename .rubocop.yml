@@ -1,0 +1,48 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.5
+
+Lint/RaiseException:
+  Enabled: true
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - liquid-diagrams.gemspec
+    - spec/**/*
+
+Naming/FileName:
+  Exclude:
+    - lib/liquid-diagrams.rb
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
+Style/Documentation:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+# RSpec
+
+RSpec/MultipleExpectations:
+  Max: 2
