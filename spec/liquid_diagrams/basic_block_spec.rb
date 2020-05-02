@@ -22,28 +22,35 @@ RSpec.describe LiquidDiagrams::BasicBlock do
   end
 
   describe '#render' do
-    it 'call #render!' do
-      allow(block).to receive(:render!).and_return 'success'
+    it 'call #render_with_rescue' do
+      allow(block).to receive(:render_with_rescue).and_return 'success'
+
+      expect(block.render(Liquid::Context.new)).to eq 'success'
+    end
+  end
+
+  describe '#render_with_rescue' do
+    it 'call #render_without_rescue' do
+      allow(block).to receive(:render_without_rescue).and_return 'success'
 
       expect(block.render(Liquid::Context.new)).to eq 'success'
     end
 
-    context 'when rendering failed' do
-      let(:error) { LiquidDiagrams::Errors::BasicError.new }
+    it 'rescue and handle the error' do
+      allow(block).to receive(:render_without_rescue).and_raise(
+        LiquidDiagrams::Errors::BasicError.new
+      )
+      allow(block).to receive(:handle_error).and_return 'ok'
 
-      it 'rescue and return the error' do
-        allow(block).to receive(:render!).and_raise(error)
-
-        expect(block.render(Liquid::Context.new)).to eq error
-      end
+      expect(block.render(Liquid::Context.new)).to eq 'ok'
     end
   end
 
-  describe '#render!' do
+  describe '#render_without_rescue' do
     it 'render with renderer' do
       allow(TestRenderer).to receive(:render).and_return 'success'
 
-      expect(block.render!(Liquid::Context.new)).to eq 'success'
+      expect(block.render(Liquid::Context.new)).to eq 'success'
     end
   end
 end

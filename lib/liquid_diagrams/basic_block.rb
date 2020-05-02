@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module LiquidDiagrams
-  # @abstract Subclass and override {#render} or {#render!} to implement
+  # @abstract Subclass and override {#render_with_rescue} or
+  #   {#render_without_rescue} to implement
   class BasicBlock < ::Liquid::Block
     # Return the renderer class matching the block
     #
@@ -14,36 +15,31 @@ module LiquidDiagrams
       )
     end
 
-    # Render with error rescued
-    #
-    # @param context [Liquid::Context]
-    #
-    # @return String
+    # @note Do not overwite this method, overwrite {#render_with_rescue} or
+    #   {#render_without_recue} instead
     def render(context)
       @content = super.to_s
+      @context = context
 
-      render!(context)
+      render_with_rescue
+    end
+
+    def render_with_rescue
+      render_without_rescue
     rescue Errors::BasicError => error
+      handle_error(error)
+    end
+
+    def render_without_rescue
+      self.class.renderer.render(@content, config)
+    end
+
+    def handle_error(error)
       error
     end
 
-    # Render without error rescued
-    #
-    # @param context [Liquid::Context]
-    #
-    # @return String
-    #
-    # @raise [Errors::BasicError]
-    #
-    # rubocop:disable Lint/UnusedMethodArgument
-    def render!(context)
-      self.class.renderer.render(@content, config)
-    end
-    # rubocop:enable Lint/UnusedMethodArgument
-
     def config
-      config = (parse_context[:config] || {})
-      config.fetch(name.split('::').last.chomp('Block').downcase, {})
+      (options[:config] || {}).fetch(block_name, {})
     end
   end
 end
