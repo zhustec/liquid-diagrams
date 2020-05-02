@@ -2,8 +2,12 @@
 
 module LiquidDiagrams
   module Renderers
-    %i[ blockdiag seqdiag actdiag nwdiag
-        rackdiag packetdiag ].each do |name|
+    %i[ Blockdiag
+        Seqdiag
+        Actdiag
+        Nwdiag
+        Rackdiag
+        Packetdiag ].each do |diagram|
       renderer = Class.new(BasicRenderer) do
         const_set :OPTIONS, %w[
           config
@@ -22,8 +26,8 @@ module LiquidDiagrams
           end
         end
 
-        def build_command
-          command = +"#{diagram_name} -T svg --nodoctype"
+        define_method :build_command do
+          command = +"#{diagram.downcase} -T svg --nodoctype"
 
           options = self.class.const_get(:OPTIONS)
           switches = self.class.const_get(:SWITCHES)
@@ -32,19 +36,15 @@ module LiquidDiagrams
             command << " --#{opt}=#{value}"
           end
 
-          Utils.merge(switches, @config).each do |switch, value|
-            command << " --#{switch}" if value
+          Utils.merge(switches, @config).each do |swc, value|
+            command << " --#{swc}" if value
           end
 
           command
         end
-
-        define_method :diagram_name do
-          name
-        end
       end
 
-      const_set "#{name.capitalize}Renderer", renderer
+      const_set "#{diagram}Renderer", renderer
     end
   end
 end

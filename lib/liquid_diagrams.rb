@@ -12,53 +12,58 @@ require_relative 'liquid_diagrams/basic_renderer'
 require_relative 'liquid_diagrams/basic_block'
 
 module LiquidDiagrams
-  # @note All renderers should be define under this module
+  # @note All renderers should be defined under this module
   module Renderers
     pattern = File.join(__dir__, 'liquid_diagrams/renderers/*_renderer.rb')
 
     Dir[pattern].sort.each { |renderer| require renderer }
   end
 
+  # @note All blocks are automaticly define under this module if not exist
   module Blocks
     Renderers.constants.grep(/Renderer$/).each do |renderer|
-      Blocks.const_set(
-        "#{renderer.to_s.chomp('Renderer')}Block", Class.new(BasicBlock)
-      )
+      block_name = "#{renderer.to_s.chomp('Renderer')}Block"
+
+      next if Blocks.const_defined?(block_name)
+
+      Blocks.const_set(block_name, Class.new(BasicBlock))
     end
   end
 
   class << self
-    # Return all avaliable diagrams
+    # Return all diagrams defined in {Renderers}
     #
     # @return [Array<Symbol>]
-    def avaliable_diagrams
-      @avaliable_diagrams ||=
-        Renderers.constants.grep(/Renderer$/).sort.map do |renderer|
-          renderer.to_s.chomp('Renderer').to_sym
-        end
+    def diagrams
+      @diagrams ||= renderers.keys
     end
 
-    # Return all renderers
+    # Return all avaliable renderers under {Renderers}
     #
-    # @return [Hash{Symbol => LiquidDiagrams::BasicRenderer}]
+    # @return [Hash{Symbol => BasicRenderer}]
     def renderers
-      @renderers ||= Hash[avaliable_diagrams.map do |diagram|
-        [diagram.to_sym, Renderers.const_get("#{diagram}Renderer")]
-      end]
+      @renderers ||= Hash[
+        Renderers.constants.grep(/Renderer$/).sort.map do |renderer|
+          [
+            renderer.to_s.chomp('Renderer').downcase.to_sym,
+            Renderers.const_get(renderer)
+          ]
+        end
+      ]
     end
 
-    # Return all blocks
+    # Return all registered diagrams block
     #
-    # @return [Hash{Symbol => LiquidDiagrams::BasicBlock}]
-    def blocks
-      @blocks ||= Hash[avaliable_diagrams.map do |diagram|
-        [diagram.to_sym, Blocks.const_get("#{diagram}Block")]
-      end]
+    # Use {.register_diagrams} and {.register_diagram} to register a diagram
+    #
+    # @return [Hash{Symbol => BasicBlock}]
+    def registered_diagrams
+      @registered_diagrams ||= {}
     end
 
     # Register diagrams
     #
-    # @param diagrams [Array<String>, Array<Symbol>] diagrams to register
+    # @param diagrams [Array<String, Symbol>] diagrams to register
     #
     # @return [Array<Liquid::Block>] the registered liquid blocks
     def register_diagrams(*diagrams)
@@ -71,13 +76,14 @@ module LiquidDiagrams
     #
     # @return [Liquid::Block] the registered liquid block
     def register_diagram(diagram)
-      diagram = diagram.to_s.capitalize.to_sym
+      diagram = diagram.to_s.downcase.to_sym
 
-      raise Errors::DiagramNotFoundError unless blocks.key?(diagram)
+      raise Errors::DiagramNotFoundError unless diagrams.include?(diagram)
 
-      Liquid::Template.register_tag(
-        diagram.downcase, Blocks.const_get("#{diagram}Block")
-      )
+      block = Blocks.const_get("#{diagram.capitalize}Block")
+
+      registered_diagrams.merge!(diagram => block)
+      Liquid::Template.register_tag(diagram, block)
     end
   end
 end

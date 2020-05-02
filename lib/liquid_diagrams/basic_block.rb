@@ -5,16 +5,16 @@ module LiquidDiagrams
   class BasicBlock < ::Liquid::Block
     # Return the renderer class matching the block
     #
-    # @return [LiquidDiagrams::BasicRenderer]
+    # @return [BasicRenderer]
     #
     # @raise [NameError] if renderer class not found
     def self.renderer
-      @renderer ||= const_get(name.gsub('Block', 'Renderer'))
+      @renderer ||= Renderers.const_get(
+        name.split('::').last.gsub(/Block$/, 'Renderer')
+      )
     end
 
     # Render with error rescued
-    #
-    # @overwrite [#render]
     #
     # @param context [Liquid::Context]
     #
@@ -34,8 +34,16 @@ module LiquidDiagrams
     # @return String
     #
     # @raise [Errors::BasicError]
-    def render!(_context)
-      self.class.renderer.render(@content)
+    #
+    # rubocop:disable Lint/UnusedMethodArgument
+    def render!(context)
+      self.class.renderer.render(@content, config)
+    end
+    # rubocop:enable Lint/UnusedMethodArgument
+
+    def config
+      config = (parse_context[:config] || {})
+      config.fetch(name.split('::').last.chomp('Block').downcase, {})
     end
   end
 end
