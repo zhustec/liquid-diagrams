@@ -11,7 +11,7 @@ RSpec.describe LiquidDiagrams::Renderers::SmcatRenderer do
 
   describe '#build_command' do
     context 'when config is empty' do
-      it { expect(renderer.build_command).to eq 'Smcat' }
+      it { expect(renderer.build_command).to eq 'smcat' }
     end
 
     context 'when config is not empty' do

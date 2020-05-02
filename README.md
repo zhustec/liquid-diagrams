@@ -26,7 +26,7 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
 - [Usage](#usage)
   - [List of diagrams](#list-of-diagrams)
   - [Register diagrams](#register-diagrams)
-  - [Now you can use the diagrams in liquid](#now-you-can-use-the-diagrams-in-liquid)
+  - [Use diagrams tag](#use-diagrams-tag)
 - [Configurations](#configurations)
 - [Contributing](#contributing)
 - [License](#license)
@@ -90,7 +90,7 @@ LiquidDiagrams.registered_diagrams
 LiquidDiagrams.register_diagrams(LiquidDiagrams.diagrams)
 ```
 
-### Now you can use the diagrams in liquid
+### Use diagrams tag
 
 ```ruby
 content = <<~CONTENT
@@ -107,9 +107,33 @@ template.render
 # => "<svg ...>...</svg>"
 ```
 
-## Configurations
+## Dependencies and Configurations
 
-See [Configrurations](CONFIGURATIONS.md)
+Configurations can be set for each diagrams when parse content, e.g.:
+
+```ruby
+content = <<~CONTENT
+  {% blockdiag %}
+    blockdiag {
+      A -> B -> C -> D;
+      A -> E -> F -> G;
+    }
+  {% endblockdiag %}
+CONTENT
+
+options = {
+  blockdiag: {
+    'scale' => 3
+  }
+  # options for other diagrams
+}
+
+template = Liquid::Template.parse(content, liquid_diagrams: options)
+template.render
+# => "<svg ...>...</svg>"
+```
+
+See [Configurations](CONFIGURATIONS.md)
 
 ## Contributing
 

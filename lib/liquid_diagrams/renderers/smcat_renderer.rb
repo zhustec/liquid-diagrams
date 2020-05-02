@@ -18,7 +18,7 @@ module LiquidDiagrams
       end
 
       def build_command
-        command = +'Smcat'
+        command = +'smcat'
 
         @config.slice(*OPTIONS).each do |opt, value|
           command << " --#{opt} #{value}"

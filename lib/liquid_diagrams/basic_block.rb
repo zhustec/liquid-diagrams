@@ -24,12 +24,21 @@ module LiquidDiagrams
       render_with_rescue
     end
 
+    # Render diagram with error rescued
+    #
+    # @return [String]
     def render_with_rescue
       render_without_rescue
     rescue Errors::BasicError => error
       handle_error(error)
     end
 
+    # Render diagram without error rescued
+    #
+    # @return [String]
+    #
+    # @raise [NameError] @see {.renderer}
+    # @raise [Errors::BasicError] if rendering failed
     def render_without_rescue
       self.class.renderer.render(@content, config)
     end
@@ -38,8 +47,15 @@ module LiquidDiagrams
       error
     end
 
+    # Read block config from parse context
+    #
+    # @return [Hash]
     def config
-      (options[:config] || {}).fetch(block_name, {})
+      opts = options[:liquid_diagrams] || options['liquid_diagrams'] || {}
+
+      opts.fetch block_name.to_sym do
+        opts.fetch(block_name.to_s, {})
+      end
     end
   end
 end

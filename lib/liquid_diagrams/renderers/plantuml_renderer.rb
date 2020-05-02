@@ -10,7 +10,7 @@ module LiquidDiagrams
       end
 
       def build_command
-        jar = Utils.vendor_path('Plantuml.1.2020.1.jar')
+        jar = Utils.vendor_path('plantuml.1.2020.1.jar')
 
         options = +Utils.run_jar(jar)
         options << ' -tsvg -pipe'

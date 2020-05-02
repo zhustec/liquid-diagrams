@@ -34,7 +34,7 @@ RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer do
     it do
       command = renderer.build_command
 
-      expect(command).to match 'Plantuml'
+      expect(command).to match 'plantuml'
       expect(command).to match '-tsvg -pipe'
     end
   end

@@ -9,8 +9,7 @@ module LiquidDiagrams
 
     def initialize(content, options = {})
       @content = content
-      @options = options
-      @config = @options.delete(:config) || {}
+      @config = options
     end
 
     def render
