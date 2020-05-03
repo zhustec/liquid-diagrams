@@ -53,4 +53,52 @@ RSpec.describe LiquidDiagrams::BasicBlock do
       expect(block.render(Liquid::Context.new)).to eq 'success'
     end
   end
+
+  describe '#config' do
+    it 'merge template options with inline options' do
+      allow(block).to receive(:template_options).and_return({ k1: :v1 })
+      allow(block).to receive(:inline_options).and_return({ k1: :v2, k2: :v2 })
+
+      expect(block.config).to eq({ k1: :v2, k2: :v2 })
+    end
+  end
+
+  describe '#template_options' do
+    let(:key) { LiquidDiagrams::OPTIONS_KEY }
+
+    it 'accept symbol key' do
+      allow(block).to receive(:parse_context).and_return({ key => { test: '1' } })
+
+      expect(block.template_options).to eq '1'
+    end
+
+    it 'accept string key' do
+      allow(block).to receive(:parse_context).and_return({ key => { 'test' => '2' } })
+
+      expect(block.template_options).to eq '2'
+    end
+  end
+
+  describe '#inline_options' do
+    let(:markup) { 'a1=v1 a2="v2" a3="k3 v3"' }
+
+    let :block do
+      TestBlock.parse(
+        'test', markup, Liquid::Tokenizer.new('{% endtest %}'),
+        Liquid::ParseContext.new
+      )
+    end
+
+    before do
+      allow(LiquidDiagrams::Utils).to receive :parse_inline_options
+    end
+
+    it 'call Utils.parse_inline_options' do
+      block.inline_options
+
+      expect(LiquidDiagrams::Utils).to have_received(
+        :parse_inline_options
+      ).with(markup)
+    end
+  end
 end

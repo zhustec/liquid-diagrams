@@ -30,6 +30,8 @@ module LiquidDiagrams
     end
   end
 
+  OPTIONS_KEY = :liquid_diagrams
+
   class << self
     # Return all diagrams defined in {Renderers}
     #

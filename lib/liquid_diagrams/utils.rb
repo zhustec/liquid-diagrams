@@ -43,5 +43,20 @@ module LiquidDiagrams
     def vendor_path(file = '')
       File.join(__dir__, '../../vendor', file)
     end
+
+    INLINE_OPTIONS_SYNTAX = /^\s*(?:(\w+)=(\w+|"[^"]+")\s+)*\s*$/.freeze
+    INLINE_OPTIONS_REGEXP = /(?:(\w+)=(\w+|"[^"]+"))/.freeze
+
+    def parse_inline_options(input)
+      options = {}
+
+      input.scan(INLINE_OPTIONS_REGEXP) do |key, value|
+        value.delete!('"') if value&.include?('"')
+
+        options[key.to_sym] = value
+      end
+
+      options
+    end
   end
 end

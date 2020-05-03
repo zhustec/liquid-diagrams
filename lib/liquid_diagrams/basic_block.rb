@@ -43,19 +43,28 @@ module LiquidDiagrams
       self.class.renderer.render(@content, config)
     end
 
+    # Default error handler
     def handle_error(error)
       error
     end
 
-    # Read block config from parse context
+    # Read configurations
     #
     # @return [Hash]
     def config
-      opts = options[:liquid_diagrams] || options['liquid_diagrams'] || {}
+      template_options.merge(inline_options)
+    end
 
-      opts.fetch block_name.to_sym do
-        opts.fetch(block_name.to_s, {})
-      end
+    # Read block options from parse context
+    def template_options
+      opts = parse_context[OPTIONS_KEY] || parse_context[OPTIONS_KEY.to_s] || {}
+
+      opts.fetch(block_name.to_sym) { opts.fetch(block_name, {}) }
+    end
+
+    # Read inline options from markup
+    def inline_options
+      Utils.parse_inline_options(@markup.strip)
     end
   end
 end
