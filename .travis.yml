@@ -1,11 +1,41 @@
----
 language: ruby
 
-cache: bundler
+os: linux
+
+dist: bionic
+
+cache:
+  bundler: true
+  pip: true
 
 rvm:
   - 2.7
   - 2.6
   - 2.5
 
-before_install: gem install bundler -v 2.1.4
+jobs:
+  fast_finish: true
+
+if: type != pull_request || head_repo != repo
+
+before_install:
+  - gem update -N --system && gem install -N bundler
+  - npm install -g --silent bit-field mermaid.cli nomnoml state-machine-cat vega-cli vega-lite wavedrom-cli
+  - pip3 install syntrax blockdiag seqdiag actdiag nwdiag
+
+install: bundle install --jobs 8 --retry 3
+
+script: bundle exec rake features
+
+addons:
+  apt:
+    update: true
+    packages:
+      - graphviz
+      - npm
+      - libgif-dev
+      - libpango1.0-dev
+      - python3-pip
+      - python3-setuptools
+      - python3-cairo
+      - python3-gi-cairo
