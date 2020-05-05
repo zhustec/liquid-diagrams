@@ -2,7 +2,7 @@
 
 [![Gem](https://img.shields.io/gem/v/liquid-diagrams.svg?label=Gem&style=flat-square)](https://rubygems.org/gems/liquid-diagrams)
 [![Test](https://img.shields.io/github/workflow/status/zhustec/liquid-diagrams/Test?label=Test&style=flat-square)](https://github.com/zhustec/liquid-diagrams/actions?query=workflow%3ATest)
-[![Feature](https://img.shields.io/travis/zhustec/liquid-diagrams.svg?label=Feature&style=flat-square)](https://travis-ci.com/zhustec/liquid-diagrams)
+[![Feature](https://img.shields.io/travis/com/zhustec/liquid-diagrams.svg?label=Feature&style=flat-square)](https://travis-ci.com/zhustec/liquid-diagrams)
 [![Lint](https://img.shields.io/github/workflow/status/zhustec/liquid-diagrams/Lint?label=Style&style=flat-square)](https://github.com/zhustec/liquid-diagrams/actions?query=workflow%3ALint)
 [![Coverage](https://img.shields.io/coveralls/github/zhustec/liquid-diagrams?label=Coverage&style=flat-square)](https://coveralls.io/github/zhustec/liquid-diagrams)
 [![License](https://img.shields.io/github/license/zhustec/liquid-diagrams.svg?label=License&style=flat-square)](https://github.com/zhustec/liquid-diagrams/blob/master/LICENSE)
@@ -19,8 +19,8 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
 - [**Svgbob**](https://ivanceras.github.io/svgbob-editor/)
 - [**Syntrax**](https://kevinpt.github.io/syntrax/)
 - [**Vega**](https://vega.github.io/vega/)
-- [**Vega-Lite**](https://vega.github.io/vega-lite/)
-- [**WaveDrom**](https://wavedrom.com/).
+- [**Vegalite**](https://vega.github.io/vega-lite/)
+- [**Wavedrom**](https://wavedrom.com/).
 
 **NOTE:** This project is under development currently.
 
@@ -29,9 +29,9 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
   - [Supported diagrams](#supported-diagrams)
   - [Register diagrams](#register-diagrams)
   - [Use diagrams tag](#use-diagrams-tag)
-  - [Configurations](#configurations)
+  - [Parse Configurations](#parse-configurations)
 - [Prerequisites](#prerequisites)
-- [Configurations](#configurations-1)
+- [Configurations](#configurations)
   - [Blockdiag](#blockdiag)
   - [Bitfield](#bitfield)
   - [Erd](#erd)
@@ -129,7 +129,7 @@ template.render
 # => "<svg ...>...</svg>"
 ```
 
-### Configurations
+### Parse Configurations
 
 Configurations can be set for each diagrams when parse content:
 

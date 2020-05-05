@@ -1,26 +1,26 @@
 
-## Prerequisites
+# Prerequisites
 
-### Blockdiag
+## Blockdiag
 
 ```bash
 pip3 install blockdiag seqdiag actiag nwdiag
 ```
 
-### Erd
+## Erd
 
 ```bash
 sudo apt install graphviz cabal-install
 cabal update && cabal install erd
 ```
 
-### Graphviz
+## Graphviz
 
 ```bash
 sudo apt install graphviz
 ```
 
-### Mermaid
+## Mermaid
 
 ```bash
 npm install -g mermaid.cli
@@ -28,31 +28,31 @@ npm install -g mermaid.cli
 
 **Notice:** You may need to install some missing libraries, follow the output of `mmdc`.
 
-### Nomnoml
+## Nomnoml
 
 ```bash
 npm install -g nomnoml
 ```
 
-### PlantUML
+## PlantUML
 
 ```bash
 sudo apt install default-jre
 ```
 
-### State Machine Cat
+## State Machine Cat
 
 ```bash
 npm install -g state-machine-cat
 ```
 
-### Svgbob
+## Svgbob
 
 ```bash
 sudo apt install cargo && cargo install svgbob_cli
 ```
 
-### Syntrax
+## Syntrax
 
 ```bash
 sudo apt install libpango1.0-dev python3-cairo python3-gi python3-gi-cairo
@@ -60,13 +60,13 @@ sudo apt install libpango1.0-dev python3-cairo python3-gi python3-gi-cairo
 pip3 install syntrax
 ```
 
-### Vega
+## Vega
 
 ```bash
 npm install -g vega-cli vega-lite
 ```
 
-### Wavedrom
+## Wavedrom
 
 ```bash
 npm install -g wavedrom-cli

@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
 
     Please refer to the link below for more details:
 
-    https://github.com/zhustec/liquid-diagrams#readme
+    https://github.com/zhustec/liquid-diagrams#prerequisites
 
     ..........................................................
     __________________________________________________________

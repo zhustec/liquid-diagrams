@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 - 2020.05.05
+
+### Features
+
+* Add diagram: `bit-field`
+* Add inline options
+
+### Spec
+
+* Add cucumber for feature specs
+
 ## 0.2.0 - 2020.05.02
 
 ### Features
