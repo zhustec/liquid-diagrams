@@ -2,13 +2,15 @@
 
 [![Gem](https://img.shields.io/gem/v/liquid-diagrams.svg?label=Gem&style=flat-square)](https://rubygems.org/gems/liquid-diagrams)
 [![Test](https://img.shields.io/github/workflow/status/zhustec/liquid-diagrams/Test?label=Test&style=flat-square)](https://github.com/zhustec/liquid-diagrams/actions?query=workflow%3ATest)
-[![Linter](https://img.shields.io/github/workflow/status/zhustec/liquid-diagrams/Lint?label=Style&style=flat-square)](https://github.com/zhustec/liquid-diagrams/actions?query=workflow%3ALint)
+[![Feature](https://img.shields.io/travis/zhustec/liquid-diagrams.svg?label=Feature&style=flat-square)](https://travis-ci.com/zhustec/liquid-diagrams)
+[![Lint](https://img.shields.io/github/workflow/status/zhustec/liquid-diagrams/Lint?label=Style&style=flat-square)](https://github.com/zhustec/liquid-diagrams/actions?query=workflow%3ALint)
 [![Coverage](https://img.shields.io/coveralls/github/zhustec/liquid-diagrams?label=Coverage&style=flat-square)](https://coveralls.io/github/zhustec/liquid-diagrams)
 [![License](https://img.shields.io/github/license/zhustec/liquid-diagrams.svg?label=License&style=flat-square)](https://github.com/zhustec/liquid-diagrams/blob/master/LICENSE)
 
 Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [asciidoctor-diagram](https://github.com/asciidoctor/asciidoctor-diagram). Currently support:
 
 - [**Blockdiag**](http://blockdiag.com/en/)
+- [**Bitfield**](https://github.com/wavedrom/bitfield)
 - [**Erd**](https://github.com/BurntSushi/erd)
 - [**GraphViz**](http://graphviz.org/)
 - [**Mermaid**](https://mermaid-js.github.io/mermaid/)
@@ -24,10 +26,24 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [List of diagrams](#list-of-diagrams)
+  - [Supported diagrams](#supported-diagrams)
   - [Register diagrams](#register-diagrams)
   - [Use diagrams tag](#use-diagrams-tag)
-- [Configurations](#configurations)
+  - [Configurations](#configurations)
+- [Prerequisites](#prerequisites)
+- [Configurations](#configurations-1)
+  - [Blockdiag](#blockdiag)
+  - [Bitfield](#bitfield)
+  - [Erd](#erd)
+  - [Graphviz](#graphviz)
+  - [Mermaid](#mermaid)
+  - [Nomnoml](#nomnoml)
+  - [PlantUML](#plantuml)
+  - [State Machine Cat](#state-machine-cat)
+  - [Svgbob](#svgbob)
+  - [Syntrax](#syntrax)
+  - [Vega](#vega)
+  - [Wavedrom](#wavedrom)
 - [Contributing](#contributing)
 - [License](#license)
 - [Code of Conduct](#code-of-conduct)
@@ -60,37 +76,43 @@ gem install liquid-diagrams
 require 'liquid_diagrams'
 ```
 
-### List of diagrams
+### Supported diagrams
 
 ```ruby
+# All supported diagrams
 LiquidDiagrams.diagrams
 #=> [:actdiag, :blockdiag, :graphviz, :mermaid, ...]
-
-# Registered diagrams, no diagrams is registered by default
-LiquidDiagrams.registered_diagrams
-# => {}
 ```
 
 ### Register diagrams
 
+Diagrams must be registered before use, no diagrams is registered by default.
+
 ```ruby
+# Registered diagrams
+LiquidDiagrams.registered_diagrams
+# => {}
+
 # Register one by one
 LiquidDiagrams.register_diagram :graphviz
-# => LiquidDiagrams::Blocks::GraphvizBlock
 
 # Register in batch
 LiquidDiagrams.register_diagrams :blockdiag, :mermaid
-# => [Blocks::BlockdiagBlock, Blocks::MermaidBlock]
 
 # Registered diagrams
 LiquidDiagrams.registered_diagrams
 # => {:graphviz => LiquidDiagrams::Blocks::GraphvizBlock, ...}
+```
 
-# Register all available diagrams
+You can register all diagrams with:
+
+```ruby
 LiquidDiagrams.register_diagrams(LiquidDiagrams.diagrams)
 ```
 
 ### Use diagrams tag
+
+Now you can use diagrams tag in liquid template:
 
 ```ruby
 content = <<~CONTENT
@@ -107,9 +129,9 @@ template.render
 # => "<svg ...>...</svg>"
 ```
 
-## Dependencies and Configurations
+### Configurations
 
-Configurations can be set for each diagrams when parse content, e.g.:
+Configurations can be set for each diagrams when parse content:
 
 ```ruby
 content = <<~CONTENT
@@ -133,7 +155,117 @@ template.render
 # => "<svg ...>...</svg>"
 ```
 
-See [Configurations](CONFIGURATIONS.md)
+## Prerequisites
+
+You still need to install some dependencies, please refer to [Prerequisites](Prerequisites.md).
+
+## Configurations
+
+### Blockdiag
+
+| Config      | Type          | Default     | Description                             |
+| ----------- | ------------- | ----------- | --------------------------------------- |
+| `antialias` | `boolean`     | unspecified | Pass diagram image to anti-alias filter |
+| `font`      | `string`      | unspecified | use FONT to draw diagram                |
+| `fontmap`   | `string`      | unspecified | use FONTMAP file to draw diagram        |
+| `size`      | `int` x `int` | unspecified | Size of diagram (ex. 320x240)           |
+
+### Bitfield
+
+| Config       | Type     | Default      | Description      |
+| ------------ | -------- | ------------ | ---------------- |
+| `fontfamily` | `string` | "sans-serif" | font family      |
+| `fontweight` | `string` | "normal"     | font weight      |
+| `fontsize`   | `number` | 14           | font size        |
+| `lanes`      | `number` | 2            | rectangle lanes  |
+| `vspace`     | `number` | 80           | vertical space   |
+| `hspace`     | `number` | 640          | horizontal space |
+| `bits`       | `number` | 32           | overall bitwidth |
+
+### Erd
+
+| Config       | Type      | Default     | Description                           |
+| ------------ | --------- | ----------- | ------------------------------------- |
+| `config`     | `string`  | unspecified | Configuration file                    |
+| `edge`       | `string`  | unspecified | Select one type of edge               |
+| `dot-entity` | `boolean` | unspecified | Use dot tables instead of HTML tables |
+
+Available values:
+
+- `edge`: `compound`, `noedge`, `ortho`, `poly`, `spline`
+
+### Graphviz
+
+| Config             | Type      | Default     | Description                  |
+| ------------------ | --------- | ----------- | ---------------------------- |
+| `layout`           | `string`  | `dot`       | Set layout engine            |
+| `graph_attributes` | see below | unspecified | Set default graph attributes |
+| `node_attributes`  | see below | unspecified | Set default node attributes  |
+| `edge_attributes`  | see below | unspecified | Set default edge attributes  |
+
+**NOTICE:** attributes can be:
+
+- `String`: eg. `color=red`
+- `Array`: eg. `['color=blue', 'fontsize=14]` or `[['color', 'blue'], ['fontsize', '14']]`
+- `Hash`: eg. `{ color: 'green', fontsize: '14' }`
+
+### Mermaid
+
+| Config            | Type     | Default | Description        |
+| ----------------- | -------- | ------- | ------------------ |
+| `width`           | `int`    | 800     | Width of the page  |
+| `height`          | `int`    | 600     | Height of the page |
+| `backgroundColor` | `string` | white   | Background color   |
+| `theme`           | `string` | default | Theme of the chart |
+
+### Nomnoml
+
+Currently no configurations
+
+### PlantUML
+
+Currently no configurations
+
+### State Machine Cat
+
+| Config       | Type     | Default    | Description              |
+| ------------ | -------- | ---------- | ------------------------ |
+| `input-type` | `string` | `smcat`    | Input type               |
+| `engine`     | `string` | `dot`      | Layout engine to use     |
+| `direction`  | `string` | `top-down` | Direction of the diagram |
+
+Available values:
+
+- `input-type`: `smcat`, `scxml`, `json`
+- `egine`: `dot`, `circo`, `fdp`, `neato`, `osage`, `twopi`
+- `direction`: `top-down`, `bottom-top`, `left-right`, `right-left`
+
+### Svgbob
+
+| Config         | Type     | Default | Description                |
+| -------------- | -------- | ------- | -------------------------- |
+| `font-family`  | `string` | arial   | Font                       |
+| `font-size`    | `int`    | 12      | Font size                  |
+| `scale`        | `int`    | 1       | Scale the entire svg       |
+| `stroke-width` | `int`    | 2       | stroke width for all lines |
+
+### Syntrax
+
+| Config        | Type      | Default     | Description            |
+| ------------- | --------- | ----------- | ---------------------- |
+| `scale`       | `int`     | 1           | Scale image            |
+| `style`       | `string`  | unspecified | Style config file      |
+| `transparent` | `boolean` | unspecified | Transparent background |
+
+### Vega
+
+| Config  | Type  | Default | Description |
+| ------- | ----- | ------- | ----------- |
+| `scale` | `int` | 1       | Scale image |
+
+### Wavedrom
+
+Currently no configurations
 
 ## Contributing
 
