@@ -6,14 +6,14 @@ module LiquidDiagrams
       XML_REGEX = /^<\?xml([^>]|\n)*>\n?/.freeze
 
       def render
-        Rendering.render_with_stdin_stdout(build_command, @content).sub(XML_REGEX, '')
+        Rendering.render_with_stdin_stdout(build_command, @content)
+                 .sub(XML_REGEX, '')
       end
 
-      def build_command
-        jar = Utils.vendor_path('plantuml.1.2020.1.jar')
+      def executable
+        jar_path = Utils.vendor_path('plantuml.1.2020.1.jar')
 
-        options = +Utils.run_jar(jar)
-        options << ' -tsvg -pipe'
+        "#{Utils.run_jar(jar_path)} -tsvg -pipe"
       end
     end
   end

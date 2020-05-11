@@ -13,16 +13,6 @@ module LiquidDiagrams
           "--input #{input} --output #{output}"
         end
       end
-
-      def build_command
-        command = +'syntrax'
-
-        @config.slice(*OPTIONS).each do |opt, value|
-          command << " --#{opt} #{value}"
-        end
-
-        command
-      end
     end
   end
 end

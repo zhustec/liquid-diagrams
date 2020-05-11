@@ -8,7 +8,7 @@ RSpec.describe LiquidDiagrams::Utils do
       it 'join the string with prefix' do
         args = described_class.join('path', with: ' -I')
 
-        expect(args).to eq ' -Ipath'
+        expect(args).to eq '-Ipath'
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe LiquidDiagrams::Utils do
           %w[path1 path2], with: ' -I'
         )
 
-        expect(args).to eq ' -Ipath1 -Ipath2'
+        expect(args).to eq '-Ipath1 -Ipath2'
       end
     end
 
@@ -28,16 +28,26 @@ RSpec.describe LiquidDiagrams::Utils do
           { color: 'red', size: '10' }, with: ' --'
         ) { |k, v| "#{k} #{v}" }
 
-        expect(args).to eq ' --color red --size 10'
+        expect(args).to eq '--color red --size 10'
       end
     end
   end
 
-  describe '.merge' do
-    it 'merge the hash' do
-      hash = described_class.merge({ k1: 1, k2: 2 }, { k1: 11, k3: 13 })
+  describe '.build_options' do
+    let(:keys) { %i[color size] }
+    let(:config) { { color: :red, scale: 5 } }
 
-      expect(hash).to eq({ k1: 11, k2: 2 })
+    it 'build options from config' do
+      expect(described_class.build_options(config, keys)).to eq '--color red'
+    end
+  end
+
+  describe '.build_flags' do
+    let(:keys) { %i[bold italic] }
+    let(:config) { { bold: true, center: true, italic: false } }
+
+    it 'build flags from config' do
+      expect(described_class.build_flags(config, keys)).to eq '--bold'
     end
   end
 

@@ -11,28 +11,20 @@ require_relative 'liquid_diagrams/rendering'
 require_relative 'liquid_diagrams/basic_renderer'
 require_relative 'liquid_diagrams/basic_block'
 
+require_relative 'liquid_diagrams/renderers'
+require_relative 'liquid_diagrams/blocks'
+
 module LiquidDiagrams
-  # @note All renderers should be defined under this module
-  module Renderers
-    pattern = File.join(__dir__, 'liquid_diagrams/renderers/*_renderer.rb')
-
-    Dir[pattern].sort.each { |renderer| require renderer }
-  end
-
-  # @note All blocks are automaticly define under this module if not exist
-  module Blocks
-    Renderers.constants.grep(/Renderer$/).each do |renderer|
-      block_name = "#{renderer.to_s.chomp('Renderer')}Block"
-
-      next if Blocks.const_defined?(block_name)
-
-      Blocks.const_set(block_name, Class.new(BasicBlock))
-    end
-  end
-
   OPTIONS_KEY = :liquid_diagrams
 
   class << self
+    # Return configuration of diagram
+    def configuration(options, key: nil, default: {})
+      config = options[OPTIONS_KEY.to_sym] || options[OPTIONS_KEY.to_s] || {}
+
+      key ? (config.dig(key.to_sym) || config.dig(key.to_s) || default) : config
+    end
+
     # Return all diagrams defined in {Renderers}
     #
     # @return [Array<Symbol>]

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe LiquidDiagrams::Renderers::VegaRenderer, :renderers do
+RSpec.describe LiquidDiagrams::Renderers::VegaliteRenderer, :renderers do
   subject(:renderer) { described_class.new('content') }
 
   describe '#render' do
@@ -10,6 +10,6 @@ RSpec.describe LiquidDiagrams::Renderers::VegaRenderer, :renderers do
   end
 
   describe '#executable' do
-    it { expect(renderer.executable).to eq 'vg2svg' }
+    it { expect(renderer.executable).to eq 'vl2vg' }
   end
 end

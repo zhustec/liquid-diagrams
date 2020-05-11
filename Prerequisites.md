@@ -28,6 +28,12 @@ npm install -g mermaid.cli
 
 **Notice:** You may need to install some missing libraries, follow the output of `mmdc`.
 
+## Netlistsvg
+
+```bash
+npm install -g netlistsvg
+```
+
 ## Nomnoml
 
 ```bash

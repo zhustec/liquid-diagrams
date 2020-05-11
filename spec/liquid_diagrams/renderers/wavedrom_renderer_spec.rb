@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-RSpec.describe LiquidDiagrams::Renderers::WavedromRenderer do
+RSpec.describe LiquidDiagrams::Renderers::WavedromRenderer, :renderers do
   subject(:renderer) { described_class.new('content') }
 
   describe '#render' do
     include_examples 'render with tempfile', described_class
   end
 
-  describe '#build_command' do
-    it { expect(renderer.build_command).to eq 'wavedrom-cli' }
+  describe '#executable' do
+    it { expect(renderer.executable).to eq 'wavedrom-cli' }
   end
 end

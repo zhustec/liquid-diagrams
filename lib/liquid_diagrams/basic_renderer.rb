@@ -1,8 +1,25 @@
 # frozen_string_literal: true
 
 module LiquidDiagrams
-  # @abstract Subclass and override {#render} to implement
+  # @abstract Subclass and override {#render} to implement.
   class BasicRenderer
+    include Rendering
+
+    # Configuration key for argument with boolean value.
+    FLAGS = [].freeze
+
+    # Prefix for {FLAGS}
+    FLAGS_PREFIX = '--'
+
+    # Configuration key for argument with key-value pairs.
+    OPTIONS = [].freeze
+
+    # Separator for key and value of {OPTIONS}.
+    OPTIONS_SEPARATOR = ' '
+
+    # Prefix for {OPTIONS}
+    OPTIONS_PREFIX = '--'
+
     def self.render(content, options = {})
       new(content, options).render
     end
@@ -12,8 +29,27 @@ module LiquidDiagrams
       @config = options
     end
 
+    # Default render method with {Errors::NotImplementedError} raised
+    #
+    # @important You should overrite this method in your own renderer class
     def render
       raise Errors::NotImplementedError
+    end
+
+    def build_command
+      "#{executable} #{arguments}".strip
+    end
+
+    def executable
+      self.class.name.split('::').last.sub(/Renderer$/, '').downcase
+    end
+
+    def arguments
+      flags = Utils.build_flags(@config, FLAGS, prefix: FLAGS_PREFIX)
+      options = Utils.build_options(@config, OPTIONS, prefix: OPTIONS_PREFIX,
+                                                      sep: OPTIONS_SEPARATOR)
+
+      "#{flags} #{options}".strip
     end
   end
 end

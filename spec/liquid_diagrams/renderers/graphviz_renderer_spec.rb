@@ -2,28 +2,18 @@
 
 require 'spec_helper'
 
-RSpec.describe LiquidDiagrams::Renderers::GraphvizRenderer do
+RSpec.describe LiquidDiagrams::Renderers::GraphvizRenderer, :renderers do
   subject(:renderer) { described_class.new('content') }
 
   describe '#render' do
     include_examples 'render with stdin and stdout', described_class
   end
 
-  describe '#build_command' do
-    context 'when config is empty' do
-      it { expect(renderer.build_command).to eq 'dot -Tsvg' }
-    end
+  describe '#executable' do
+    it { expect(renderer.executable).to eq 'dot -Tsvg' }
+  end
 
-    context 'when config is not empty' do
-      before do
-        renderer.instance_variable_set(:@config, { 'layout' => 'dot' })
-      end
-
-      it 'build command with config' do
-        expect(renderer.build_command).to match '-Kdot'
-      end
-    end
-
+  describe '#arguments' do
     context 'with string attributes' do
       before do
         renderer.instance_variable_set(
@@ -31,8 +21,8 @@ RSpec.describe LiquidDiagrams::Renderers::GraphvizRenderer do
         )
       end
 
-      it 'build command' do
-        expect(renderer.build_command).to match ' -Gcolor=red'
+      it do
+        expect(renderer.arguments).to match '-Gcolor=red'
       end
     end
 
@@ -43,8 +33,8 @@ RSpec.describe LiquidDiagrams::Renderers::GraphvizRenderer do
         )
       end
 
-      it 'build command' do
-        expect(renderer.build_command).to match ' -Ncolor=red -Nsize=10'
+      it do
+        expect(renderer.arguments).to match '-Ncolor=red -Nsize=10'
       end
     end
 
@@ -55,8 +45,8 @@ RSpec.describe LiquidDiagrams::Renderers::GraphvizRenderer do
         )
       end
 
-      it 'build command' do
-        expect(renderer.build_command).to match ' -Ecolor=red -Esize=10'
+      it do
+        expect(renderer.arguments).to match '-Ecolor=red -Esize=10'
       end
     end
   end

@@ -15,6 +15,7 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
 - [**GraphViz**](http://graphviz.org/)
 - [**Mermaid**](https://mermaid-js.github.io/mermaid/)
 - [**Nomnoml**](http://nomnoml.com/)
+- [**Netlistsvg**](https://github.com/nturley/netlistsvg)
 - [**PlantUML**](https://plantuml.com/)
 - [**Svgbob**](https://ivanceras.github.io/svgbob-editor/)
 - [**Syntrax**](https://kevinpt.github.io/syntrax/)
@@ -37,6 +38,7 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
   - [Erd](#erd)
   - [Graphviz](#graphviz)
   - [Mermaid](#mermaid)
+  - [Netlistsvg](#netlistsvg)
   - [Nomnoml](#nomnoml)
   - [PlantUML](#plantuml)
   - [State Machine Cat](#state-machine-cat)
@@ -217,6 +219,10 @@ Available values:
 | `height`          | `int`    | 600     | Height of the page |
 | `backgroundColor` | `string` | white   | Background color   |
 | `theme`           | `string` | default | Theme of the chart |
+
+### Netlistsvg
+
+Currently no configurations
 
 ### Nomnoml
 

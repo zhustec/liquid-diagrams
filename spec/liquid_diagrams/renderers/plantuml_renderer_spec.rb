@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer do
+RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer, :renderers do
   subject(:renderer) { described_class.new('content') }
 
   describe '#render' do
@@ -13,15 +13,10 @@ RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer do
       ).and_return('<?xml version="1.0" encoding="UTF-8" standalone="no"?><>')
     end
 
-    it 'call build_command' do
-      renderer.render
-
-      expect(renderer).to have_received(:build_command)
-    end
-
     it 'render with stdin and stdout' do
       renderer.render
 
+      expect(renderer).to have_received(:build_command)
       expect(LiquidDiagrams::Rendering).to have_received(:render_with_stdin_stdout)
     end
 
@@ -30,12 +25,7 @@ RSpec.describe LiquidDiagrams::Renderers::PlantumlRenderer do
     end
   end
 
-  describe '#build_command' do
-    it do
-      command = renderer.build_command
-
-      expect(command).to match 'plantuml'
-      expect(command).to match '-tsvg -pipe'
-    end
+  describe '#executable' do
+    it { expect(renderer.executable).to match '-tsvg -pipe' }
   end
 end

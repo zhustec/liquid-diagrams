@@ -3,11 +3,17 @@
 module LiquidDiagrams
   module Renderers
     class BitfieldRenderer < BasicRenderer
+      FLAGS = %w[
+        compact
+        hflip
+        vflip
+      ].freeze
+
       OPTIONS = %w[
-        vspace
-        hspace
-        lanes
         bits
+        lanes
+        hspace
+        vspace
         fontsize
         fontfamily
         fontweight
@@ -17,16 +23,6 @@ module LiquidDiagrams
         Rendering.render_with_tempfile(build_command, @content) do |input, output|
           "--input #{input} > #{output}"
         end
-      end
-
-      def build_command
-        command = +'bitfield'
-
-        @config.slice(*OPTIONS).each do |opt, value|
-          command << " --#{opt} #{value}"
-        end
-
-        command
       end
     end
   end

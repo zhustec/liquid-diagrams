@@ -8,10 +8,6 @@ module LiquidDiagrams
           "#{input} #{output}"
         end
       end
-
-      def build_command
-        'nomnoml'
-      end
     end
   end
 end

@@ -3,14 +3,16 @@
 module LiquidDiagrams
   module Renderers
     class ErdRenderer < BasicRenderer
+      FLAGS = %w[
+        dot-entity
+      ].freeze
+
       OPTIONS = %w[
         config
         edge
       ].freeze
 
-      SWITCHES = {
-        'dot-entity' => false
-      }.freeze
+      OPTIONS_SEPARATOR = '='
 
       XML_REGEX = /^<\?xml(([^>]|\n)*>\n?){2}/.freeze
 
@@ -18,18 +20,8 @@ module LiquidDiagrams
         Rendering.render_with_stdin_stdout(build_command, @content).sub(XML_REGEX, '')
       end
 
-      def build_command
-        command = +'erd --fmt=svg'
-
-        @config.slice(*OPTIONS).each do |opt, value|
-          command << " --#{opt}=#{value}"
-        end
-
-        Utils.merge(SWITCHES, @config).each do |switch, value|
-          command << " --#{switch}" if value
-        end
-
-        command
+      def executable
+        'erd --fmt=svg'
       end
     end
   end

@@ -9,6 +9,9 @@ module LiquidDiagrams
     module_function
 
     def render_with_stdin_stdout(command, content)
+      options = yield command if block_given?
+      command = "#{command} #{options}".strip
+
       render_with_command(command, :stdout, stdin_data: content)
     end
 
@@ -18,11 +21,10 @@ module LiquidDiagrams
 
       File.write(input.path, content)
 
-      extra = yield input.path, output.path
-      command = "#{command} #{extra}"
+      options = yield input.path, output.path
+      command = "#{command} #{options}".strip
 
       render_with_command(command, output.path)
-    # TODO: recue Tempfile.new and File.write error
     ensure
       input.close!
       output.close!
@@ -36,9 +38,9 @@ module LiquidDiagrams
       end
 
       unless status.success?
-        raise Errors::RenderingFailedError, <<~MSG
-          #{command}: #{stderr.empty? ? stdout : stderr}
-        MSG
+        msg = "#{command}: #{stderr.empty? ? stdout : stderr}"
+
+        raise Errors::RenderingFailedError, msg
       end
 
       output == :stdout ? stdout : File.read(output)

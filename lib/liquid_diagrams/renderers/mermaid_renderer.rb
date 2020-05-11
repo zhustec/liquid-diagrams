@@ -19,15 +19,8 @@ module LiquidDiagrams
         end
       end
 
-      def build_command
-        command = +'mmdc --puppeteerConfigFile '
-        command << Utils.vendor_path('mermaid_puppeteer_config.json')
-
-        @config.slice(*OPTIONS).each do |opt, value|
-          command << " --#{opt} #{value}"
-        end
-
-        command
+      def executable
+        "mmdc --puppeteerConfigFile #{Utils.vendor_path('puppeteer.json')}"
       end
     end
   end

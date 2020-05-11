@@ -20,7 +20,8 @@ if: type != pull_request || head_repo != repo
 
 before_install:
   - gem update -N --system && gem install -N bundler
-  - npm install -g --silent bit-field mermaid.cli nomnoml state-machine-cat vega-cli vega-lite wavedrom-cli
+  - npm install -g --silent bit-field mermaid.cli netlistsvg nomnoml \
+      state-machine-cat vega-cli vega-lite wavedrom-cli
   - pip3 install syntrax blockdiag seqdiag actdiag nwdiag
 
 install: bundle install --jobs 8 --retry 3

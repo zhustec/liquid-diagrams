@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module LiquidDiagrams
-  # @abstract Subclass and override {#render_with_rescue} or
-  #   {#render_without_rescue} to implement
+  # @abstract Subclass and override {#render_svg} to implement
   class BasicBlock < ::Liquid::Block
     # Return the renderer class matching the block
     #
@@ -15,56 +14,30 @@ module LiquidDiagrams
       )
     end
 
-    # @note Do not overwite this method, overwrite {#render_with_rescue} or
-    #   {#render_without_recue} instead
+    # @note Do not override this method, override {#render_svg} instead
     def render(context)
-      @content = super.to_s
       @context = context
+      @content = super.to_s
+      @config = read_config
 
-      render_with_rescue
+      render_svg
     end
 
-    # Render diagram with error rescued
-    #
-    # @return [String]
-    def render_with_rescue
-      render_without_rescue
+    def render_svg
+      self.class.renderer.render(@content, @config)
     rescue Errors::BasicError => error
       handle_error(error)
     end
 
-    # Render diagram without error rescued
-    #
-    # @return [String]
-    #
-    # @raise [NameError] @see {.renderer}
-    # @raise [Errors::BasicError] if rendering failed
-    def render_without_rescue
-      self.class.renderer.render(@content, config)
-    end
-
-    # Default error handler
     def handle_error(error)
       error
     end
 
-    # Read configurations
-    #
-    # @return [Hash]
-    def config
-      template_options.merge(inline_options)
-    end
+    def read_config
+      options = LiquidDiagrams.configuration(parse_context, key: block_name)
+      inline_options = Utils.parse_inline_options(@markup.strip)
 
-    # Read block options from parse context
-    def template_options
-      opts = parse_context[OPTIONS_KEY] || parse_context[OPTIONS_KEY.to_s] || {}
-
-      opts.fetch(block_name.to_sym) { opts.fetch(block_name, {}) }
-    end
-
-    # Read inline options from markup
-    def inline_options
-      Utils.parse_inline_options(@markup.strip)
+      options.merge(inline_options)
     end
   end
 end

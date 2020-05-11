@@ -16,16 +16,6 @@ module LiquidDiagrams
           "#{input} --output-to #{output}"
         end.sub(XML_REGEX, '')
       end
-
-      def build_command
-        command = +'smcat'
-
-        @config.slice(*OPTIONS).each do |opt, value|
-          command << " --#{opt} #{value}"
-        end
-
-        command
-      end
     end
   end
 end

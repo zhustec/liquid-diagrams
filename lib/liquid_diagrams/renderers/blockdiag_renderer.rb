@@ -4,6 +4,10 @@ module LiquidDiagrams
   module Renderers
     %i[Blockdiag Seqdiag Actdiag Nwdiag Rackdiag Packetdiag].each do |diagram|
       renderer = Class.new(BasicRenderer) do
+        const_set :FLAGS, %w[
+          antialias
+        ].freeze
+
         const_set :OPTIONS, %w[
           config
           font
@@ -11,9 +15,7 @@ module LiquidDiagrams
           size
         ].freeze
 
-        const_set :SWITCHES, {
-          'antialias' => false
-        }.freeze
+        const_set :OPTIONS_SEPARATOR, '='
 
         def render
           Rendering.render_with_tempfile(build_command, @content) do |input, output|
@@ -21,18 +23,8 @@ module LiquidDiagrams
           end
         end
 
-        define_method :build_command do
-          command = +"#{diagram.downcase} -T svg --nodoctype"
-
-          @config.slice(*self.class.const_get(:OPTIONS)).each do |opt, value|
-            command << " --#{opt}=#{value}"
-          end
-
-          Utils.merge(self.class.const_get(:SWITCHES), @config).each do |swc, value|
-            command << " --#{swc}" if value
-          end
-
-          command
+        define_method :executable do
+          "#{diagram.downcase} -Tsvg --nodoctype"
         end
       end
 

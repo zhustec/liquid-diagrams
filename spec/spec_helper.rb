@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 
+require 'deep_cover/builtin_takeover'
 require 'simplecov'
 require 'pry-byebug'
 

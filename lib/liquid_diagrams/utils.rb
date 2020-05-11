@@ -6,38 +6,45 @@ module LiquidDiagrams
 
     # Join the args with prefix
     #
-    # @param args
+    # @param args [String, Array, Hash]
     # @param with [String]
+    #
+    # @yield When `args` is a Hash, you must provide a block
+    # @yieldreturn [String] The result string to join
     #
     # @return [String]
     #
     # @example join on string
-    #   join('path', with: ' -I')                     # => ' -Ipath'
+    #   join('path', with: ' -I')                     # => '-Ipath'
     #
     # @example join on array
-    #   join(['path1', 'path2'], with: ' -I')         # => ' -Ipath1 -Ipath2'
+    #   join(%w[path1 path2], with: ' -I')            # => '-Ipath1 -Ipath2'
     #
     # @example join on hash
     #   join({ color: 'red', size: '10' }, with: ' --') do |k, v|
     #     "#{k} #{v}"
-    #   end                                           # => ' --color red --size 10'
+    #   end                                           # => '--color red --size 10'
     def join(args, with:)
       args = Array(args)
       args = args.map { |arg| yield arg } if block_given?
 
-      "#{with}#{args.join(with)}"
+      "#{with}#{args.join(with)}".strip
     end
 
-    # Merge from the hash with only those keys exists
-    #
-    # @example
-    #   merge({ k1: 1, k2: 2}, { k1: 11, k3: 13})     # => { k1: 11, k2: 2 }
-    def merge(first, second)
-      first.merge(second.slice(*first.keys))
+    def build_options(config, keys, prefix: '--', sep: ' ')
+      config.slice(*keys).map do |opt, val|
+        "#{prefix}#{opt}#{sep}#{val}"
+      end.join(' ').strip
+    end
+
+    def build_flags(config, keys, prefix: '--')
+      config.slice(*keys).map do |flag, val|
+        "#{prefix}#{flag}" if val
+      end.join(' ').strip
     end
 
     def run_jar(jar)
-      +"java -Djava.awt.headless=true -jar #{jar}"
+      "java -Djava.awt.headless=true -jar #{jar}"
     end
 
     def vendor_path(file = '')
@@ -51,7 +58,7 @@ module LiquidDiagrams
       options = {}
 
       input.scan(INLINE_OPTIONS_REGEXP) do |key, value|
-        value.delete!('"') if value&.include?('"')
+        value.delete!('"') if value.include?('"')
 
         options[key.to_sym] = value
       end
