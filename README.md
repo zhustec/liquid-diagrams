@@ -7,23 +7,7 @@
 [![Coverage](https://img.shields.io/coveralls/github/zhustec/liquid-diagrams?label=Coverage&style=flat-square)](https://coveralls.io/github/zhustec/liquid-diagrams)
 [![License](https://img.shields.io/github/license/zhustec/liquid-diagrams.svg?label=License&style=flat-square)](https://github.com/zhustec/liquid-diagrams/blob/master/LICENSE)
 
-Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [asciidoctor-diagram](https://github.com/asciidoctor/asciidoctor-diagram). Currently support:
-
-- [**Blockdiag**](http://blockdiag.com/en/)
-- [**Bitfield**](https://github.com/wavedrom/bitfield)
-- [**Erd**](https://github.com/BurntSushi/erd)
-- [**GraphViz**](http://graphviz.org/)
-- [**Mermaid**](https://mermaid-js.github.io/mermaid/)
-- [**Nomnoml**](http://nomnoml.com/)
-- [**Netlistsvg**](https://github.com/nturley/netlistsvg)
-- [**PlantUML**](https://plantuml.com/)
-- [**Svgbob**](https://ivanceras.github.io/svgbob-editor/)
-- [**Syntrax**](https://kevinpt.github.io/syntrax/)
-- [**Vega**](https://vega.github.io/vega/)
-- [**Vegalite**](https://vega.github.io/vega-lite/)
-- [**Wavedrom**](https://wavedrom.com/).
-
-**NOTE:** This project is under development currently.
+Liquid Diagrams is a liquid plugins for rendering svg diagrams, it is inspired by [asciidoctor-diagram](https://github.com/asciidoctor/asciidoctor-diagram). Currently support: [**Blockdiag**](http://blockdiag.com/en/), [**Bitfield**](https://github.com/wavedrom/bitfield), [**Erd**](https://github.com/BurntSushi/erd), [**GraphViz**](http://graphviz.org/), [**Mermaid**](https://mermaid-js.github.io/mermaid/), [**Nomnoml**](http://nomnoml.com/), [**Netlistsvg**](https://github.com/nturley/netlistsvg), [**PlantUML**](https://plantuml.com/), [**Svgbob**](https://ivanceras.github.io/svgbob-editor/), [**Syntrax**](https://kevinpt.github.io/syntrax/), [**Vega**](https://vega.github.io/vega/), [**Vegalite**](https://vega.github.io/vega-lite/), [**Wavedrom**](https://wavedrom.com/).
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -45,6 +29,7 @@ Liquid Diagrams is a liquid plugins for creating diagrams, it is inspired by [as
   - [Svgbob](#svgbob)
   - [Syntrax](#syntrax)
   - [Vega](#vega)
+  - [Vegalite](#vegalite)
   - [Wavedrom](#wavedrom)
 - [Contributing](#contributing)
 - [License](#license)
@@ -163,6 +148,8 @@ You still need to install some dependencies, please refer to [Prerequisites](Pre
 
 ## Configurations
 
+**Warning:** All default configuration are provided by upstream, so it maybe different from here.
+
 ### Blockdiag
 
 | Config      | Type          | Default     | Description                             |
@@ -264,6 +251,12 @@ Available values:
 | `transparent` | `boolean` | unspecified | Transparent background |
 
 ### Vega
+
+| Config  | Type  | Default | Description |
+| ------- | ----- | ------- | ----------- |
+| `scale` | `int` | 1       | Scale image |
+
+### Vegalite
 
 | Config  | Type  | Default | Description |
 | ------- | ----- | ------- | ----------- |

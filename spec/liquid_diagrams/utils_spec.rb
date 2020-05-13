@@ -80,7 +80,9 @@ RSpec.describe LiquidDiagrams::Utils do
 
       options = described_class.parse_inline_options(input)
 
-      expect(options).to match a_hash_including(a1: 'v1', a2: 'v2', a3: 'k3 v3')
+      expect(options).to match a_hash_including(
+        'a1' => 'v1', 'a2' => 'v2', 'a3' => 'k3 v3'
+      )
     end
   end
 end

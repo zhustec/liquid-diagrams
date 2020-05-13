@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
-require 'simplecov-lcov'
+format =
+  if ENV['CI']
+    require 'simplecov-lcov'
 
-LcovFormatter.config do |c|
-  c.report_with_single_file = true
-  c.output_directory = 'coverage'
-  c.lcov_file_name = 'lcov.info'
-end
+    SimpleCov::Formatter::LcovFormatter.config do |c|
+      c.report_with_single_file = true
+      c.output_directory = 'coverage'
+      c.lcov_file_name = 'lcov.info'
+    end
+
+    SimpleCov::Formatter::LcovFormatter
+  else
+    SimpleCov::Formatter::HTMLFormatter
+  end
 
 SimpleCov.start do
   enable_coverage :branch
@@ -17,8 +24,5 @@ SimpleCov.start do
   add_group 'Diagrams', %r{^/lib/liquid_diagrams/renderers/}
   add_group 'Specs', %r{^/spec/}
 
-  formatter MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::LcovFormatter
-  ])
+  formatter format
 end

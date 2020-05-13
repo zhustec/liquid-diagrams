@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.4.0 - 2020.05.13
+
+### Features
+
+* Add diagram: `netlistsvg`
+* Fix inline options
+
+### Refactor
+
+* BasicBlock: Remove useless methods
+* BasicRenderer: Automaticly build command
+* Vegalite: Split vegalite and vega
+
+### Others
+
+* Add Dockerfile for run features test locally
+* Use different format of RSpec and Cucumber
+
 ## 0.3.0 - 2020.05.05
 
 ### Features

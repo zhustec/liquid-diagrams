@@ -1,4 +1,5 @@
-Feature: Nomnoml Rendering
+@diagrams
+Feature: Nomnoml
 
   As a liquid user, I want to use nomnoml diagram
 
@@ -6,10 +7,10 @@ Feature: Nomnoml Rendering
     Given I have a liquid template with:
       """
       {% nomnoml %}
-        [Pirate|eyeCount: Int|raid();pillage()|
+      [Pirate|eyeCount: Int|raid();pillage()|
         [beard]--[parrot]
         [beard]-:>[foul mouth]
-        ]
+      ]
       {% endnomnoml %}
       """
 

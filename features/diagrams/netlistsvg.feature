@@ -1,4 +1,5 @@
-Feature: Netlistsvg Rendering
+@diagrams
+Feature: Netlistsvg
 
   As a liquid user, I want to use netlistsvg diagram
 
@@ -6,18 +7,18 @@ Feature: Netlistsvg Rendering
     Given I have a liquid template with:
       """
       {% netlistsvg %}
-        {
-          modules: {
-            up3down5: {
-              cells: {
-                "$add$input.v:17$3": {
-                  type: "$add",
-                  connections: {}
-                }
+      {
+        modules: {
+          up3down5: {
+            cells: {
+              "$add$input.v:17$3": {
+                type: "$add",
+                connections: {}
               }
             }
           }
         }
+      }
       {% endnetlistsvg %}
       """
 

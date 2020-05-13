@@ -10,6 +10,6 @@ RSpec.describe LiquidDiagrams::Renderers::VegaliteRenderer, :renderers do
   end
 
   describe '#executable' do
-    it { expect(renderer.executable).to eq 'vl2vg' }
+    it { expect(renderer.executable).to eq 'vl2svg' }
   end
 end

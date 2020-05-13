@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.files         = Dir['lib/**/*', 'vendor/**/*', 'LICENSE', 'README.md']
-  spec.test_files    = Dir['spec/**/*']
+  spec.test_files    = Dir['features/**/*', 'spec/**/*']
 
   spec.require_paths = ['lib']
 
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
     'bug_tracker_uri' => 'https://github.com/zhustec/liquid-diagrams/issues'
   }
 
-  spec.post_install_message = "
+  spec.post_install_message = <<~MSG
     __________________________________________________________
     ..........................................................
 
@@ -45,7 +45,8 @@ Gem::Specification.new do |spec|
 
     ..........................................................
     __________________________________________________________
-  "
+
+  MSG
 
   spec.add_dependency 'liquid', '~> 4.0'
 

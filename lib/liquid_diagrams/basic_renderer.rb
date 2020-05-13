@@ -45,9 +45,15 @@ module LiquidDiagrams
     end
 
     def arguments
-      flags = Utils.build_flags(@config, FLAGS, prefix: FLAGS_PREFIX)
-      options = Utils.build_options(@config, OPTIONS, prefix: OPTIONS_PREFIX,
-                                                      sep: OPTIONS_SEPARATOR)
+      flags = Utils.build_flags(
+        @config, self.class.const_get(:FLAGS),
+        prefix: self.class.const_get(:FLAGS_PREFIX)
+      )
+      options = Utils.build_options(
+        @config, self.class.const_get(:OPTIONS),
+        prefix: self.class.const_get(:OPTIONS_PREFIX),
+        sep: self.class.const_get(:OPTIONS_SEPARATOR)
+      )
 
       "#{flags} #{options}".strip
     end

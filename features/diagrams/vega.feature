@@ -1,4 +1,5 @@
-Feature: Vega Rendering
+@diagrams
+Feature: Vega
 
   As a liquid user, I want to use vega diagram
 

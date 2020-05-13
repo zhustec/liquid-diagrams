@@ -1,4 +1,5 @@
-Feature: Graphviz Rendering
+@diagrams
+Feature: Graphviz
 
   As a liquid user, I want to use graphviz diagram
 

@@ -22,23 +22,23 @@ RSpec.describe LiquidDiagrams::BasicBlock do
   end
 
   describe '#render' do
-    it 'call #render_svg to render' do
+    it 'call #render_content to render' do
       allow(block).to receive(:read_config)
-      allow(block).to receive(:render_svg).and_return 'svg ok!'
+      allow(block).to receive(:render_content).and_return 'svg ok!'
 
       expect(block.render(Liquid::Context.new)).to eq 'svg ok!'
       expect(block).to have_received(:read_config)
     end
   end
 
-  describe '#render_svg' do
+  describe '#render_content' do
     it 'call handle error if error rescued' do
       error = LiquidDiagrams::Errors::BasicError.new
 
       allow(TestRenderer).to receive(:render).and_raise(error)
       allow(block).to receive(:handle_error)
 
-      block.render_svg
+      block.render_content
 
       expect(block).to have_received(:handle_error).with(error)
     end

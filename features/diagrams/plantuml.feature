@@ -1,4 +1,5 @@
-Feature: Plantuml Rendering
+@diagrams
+Feature: Plantuml
 
   As a liquid user, I want to use plantuml diagram
 

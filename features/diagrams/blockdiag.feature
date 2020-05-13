@@ -1,4 +1,5 @@
-Feature: Blockdiag Rendering
+@diagrams
+Feature: Blockdiag
 
   As a liquid user, I want to use blockdiag diagram
 

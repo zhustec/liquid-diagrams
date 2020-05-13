@@ -1,4 +1,5 @@
-Feature: Smcat Rendering
+@diagrams
+Feature: Smcat
 
   As a liquid user, I want to use smcat diagram
 

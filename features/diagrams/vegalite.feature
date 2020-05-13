@@ -1,4 +1,5 @@
-Feature: Vegalite Rendering
+@diagrams
+Feature: Vegalite
 
   As a liquid user, I want to use vegalite diagram
 

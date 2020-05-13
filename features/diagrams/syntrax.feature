@@ -1,4 +1,5 @@
-Feature: Syntrax Rendering
+@diagrams
+Feature: Syntrax
 
   As a liquid user, I want to use syntrax diagram
 

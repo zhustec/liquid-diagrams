@@ -1,4 +1,5 @@
-Feature: Mermaid Rendering
+@diagrams
+Feature: Mermaid
 
   As a liquid user, I want to use mermaid diagram
 

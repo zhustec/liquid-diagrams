@@ -3,14 +3,16 @@
 module LiquidDiagrams
   module Renderers
     class VegaliteRenderer < BasicRenderer
-      def render
-        content = Rendering.render_with_stdin_stdout(build_command, @content)
+      OPTIONS = %w[
+        scale
+      ].freeze
 
-        VegaRenderer.render(content)
+      def render
+        Rendering.render_with_stdin_stdout(build_command, @content)
       end
 
       def executable
-        'vl2vg'
+        'vl2svg'
       end
     end
   end

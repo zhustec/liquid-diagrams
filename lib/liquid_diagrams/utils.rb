@@ -60,7 +60,7 @@ module LiquidDiagrams
       input.scan(INLINE_OPTIONS_REGEXP) do |key, value|
         value.delete!('"') if value.include?('"')
 
-        options[key.to_sym] = value
+        options[key.to_s] = value
       end
 
       options
