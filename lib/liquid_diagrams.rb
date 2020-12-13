@@ -22,7 +22,7 @@ module LiquidDiagrams
     def configuration(options, key: nil, default: {})
       config = options[OPTIONS_KEY.to_sym] || options[OPTIONS_KEY.to_s] || {}
 
-      key ? (config.dig(key.to_sym) || config.dig(key.to_s) || default) : config
+      key ? (config[key.to_sym] || config[key.to_s] || default) : config
     end
 
     # Return all diagrams defined in {Renderers}
