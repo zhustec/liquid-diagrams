@@ -37,6 +37,7 @@ addons:
       - npm
       - libgif-dev
       - libpango1.0-dev
+      - node-gyp
       - python3-pip
       - python3-setuptools
       - python3-cairo

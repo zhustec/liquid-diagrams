@@ -5,6 +5,7 @@ require:
 
 AllCops:
   TargetRubyVersion: 2.5
+  SuggestExtensions: false
 
 Lint/RaiseException:
   Enabled: true

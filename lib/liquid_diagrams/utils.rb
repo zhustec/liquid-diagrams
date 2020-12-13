@@ -24,9 +24,9 @@ module LiquidDiagrams
     #   join({ color: 'red', size: '10' }, with: ' --') do |k, v|
     #     "#{k} #{v}"
     #   end                                           # => '--color red --size 10'
-    def join(args, with:)
+    def join(args, with:, &block)
       args = Array(args)
-      args = args.map { |arg| yield arg } if block_given?
+      args = args.map(&block) if block_given?
 
       "#{with}#{args.join(with)}".strip
     end
